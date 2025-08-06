@@ -7,5 +7,10 @@ export const routes: Routes = [
                 pathMatch: 'full',
                 loadComponent: () =>
                     import('./componenets/home-page/home-page').then((m) => m.HomePageComponent),
-            }
+            },
+             {
+        path: 'our-work',
+        loadComponent: () =>
+          import('./componenets/our-work-page/our-work-page').then((m) => m.OurWorkPage),
+      }
         ]

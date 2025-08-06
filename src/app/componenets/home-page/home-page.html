@@ -4,7 +4,7 @@
   <div class="container">
     <div class="header-content">
       <a href="#" class="logo">ALEXANDRINOS</a>
-      <button  (click)="scrollToContact()">
+      <button class="get-in-touch" (click)="scrollToContact()">
   Get in touch
   <div class="star-1">
     <svg
@@ -125,13 +125,41 @@
   </div>
 </header>
 <body>
+ <!-- Loading Animation -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loader">
+      <div class="loader-element">
+        <div class="custom-logo-loader">
+          <svg class="logo-svg" viewBox="0 0 2480 3507" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+            <g transform="matrix(3.38773,0,0,3.38773,-177.335,443.027)">
+              <text x="325.347px" y="584.012px" style="font-family:'YuKyo-Bold', 'YuKyokasho';font-weight:700;font-size:36.898px;">ALEXANDRINOS</text>
+            </g>
+              <g transform="matrix(1.32284,0,0,1.32284,-489.876,679.291)">
+                <g transform="matrix(0.309096,-0.00100037,0.00307749,0.95089,1095.34,-34.4232)">
+                  <rect x="776.411" y="374.536" width="463.747" height="921.498" style="fill:rgb(8,0,0);"/>
+                </g>
+                <g transform="matrix(1,0,0,0.825693,0,55.9258)">
+                  <path d="M800.213,1528.18L1336.47,320.974L1479.87,334.121L957.074,1529.27L800.213,1528.18Z" style="fill:rgb(8,0,0);"/>
+                </g>
+                <g transform="matrix(0.000105225,0.304697,-0.550286,0.000190037,2062.66,819.026)">
+                  <rect x="776.411" y="374.536" width="463.747" height="921.498" style="fill:rgb(8,0,0);"/>
+                </g>
+                  <g transform="matrix(0.7894,0,0,0.755947,353.689,-475.011)">
+                    <path d="M887.541,1746.69L1191.69,1745.65L1191.75,1905.6L805.611,1905.58L887.541,1746.69Z" style="fill:rgb(76,76,76);"/>
+                </g>
+              </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Hero Section -->
 <section class="hero">
   <div class="container">
     <div class="hero-content">
       <h1>Transform Your Space Into a Masterpiece</h1>
       <p>Premium house renovations with attention to detail and craftsmanship that exceeds expectations.</p>
-      <button class="cta-button">Explore Our Work</button>
+      <button class="cta-button" (click)="navigateToOurWork()">Explore Our Work</button>
     </div>
   </div>
   <div class="hero-image-wrapper">
@@ -142,7 +170,7 @@
 </section>
 
 <!-- Services Section -->
-<section class="services">
+<!-- <section class="services">
   <div class="container">
     <h2 class="section-title animate-on-scroll">Our Services</h2>
     <div class="services-grid">
@@ -155,7 +183,27 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+
+<!-- From Uiverse.io by joe-watson-sbf --> 
+ <div class="container">
+  <div class="service-grid">
+  <div class="service-card" *ngFor="let service of services; let i = index">
+      <div class="service-card-inner">
+          <div class="service-card-front">
+            <div class="service-icon">
+              <i [class]="service.icon"></i>
+            </div>
+              <p class="title">{{ service.title }}</p>
+          </div>
+          <div class="service-card-back">
+              <p>{{ service.description }}</p>
+          </div>
+      </div>
+  </div>
+ </div>
+ </div>
+
 
 <!-- About Us Section -->
 <section class="about">
@@ -199,7 +247,16 @@
             </div>
             <div>
               <h4>{{ contact.title }}</h4>
-              <p>{{ contact.value }}</p>
+                <ng-container *ngIf="contact.title === 'Location'; else normalText">
+                  <p>
+                    <a [href]="getGoogleMapsLink(contact.value)" target="_blank" rel="noopener">
+                      {{ contact.value }}
+                    </a>
+                  </p>
+              </ng-container>
+              <ng-template #normalText>
+                <p>{{ contact.value }}</p>
+              </ng-template>
             </div>
           </div>
         </div>

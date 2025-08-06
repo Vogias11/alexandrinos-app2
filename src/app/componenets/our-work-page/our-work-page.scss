@@ -1,0 +1,532 @@
+// Color Variables
+$primary-light: #ffffff;
+$primary-dark: #121212;
+$secondary-light: #f8f9fa;
+$background-light: #f5f7fa;
+$text-dark: #0a0a0a;
+$text-grey-dark: #2d2d2d;
+$text-grey: #4a4a4a;
+$text-grey-light: #6c757d;
+$text-grey-muted: #9ca3af;
+$border-light: #e5e7eb;
+$border-grey: #d1d5db;
+$accent-dark: #1f2937;
+$accent-darker: #111827;
+$shadow-light: rgba(0, 0, 0, 0.05);
+$shadow-medium: rgba(0, 0, 0, 0.1);
+$shadow-dark: rgba(0, 0, 0, 0.15);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-base {
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@mixin card-base {
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  border: 1px solid $border-light;
+  background: $primary-light;
+  box-shadow: 0 4px 6px $shadow-light;
+}
+
+@mixin section-padding {
+  padding: 100px 0;
+}
+
+@mixin responsive-font($desktop, $tablet, $mobile) {
+  font-size: $desktop;
+  
+  @media (max-width: 1024px) {
+    font-size: $tablet;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: $mobile;
+  }
+}
+
+// Reset and Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: $primary-light;
+  color: $text-dark;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+// Section Title
+.section-title {
+  text-align: center;
+  @include responsive-font(3rem, 2.5rem, 2.2rem);
+  margin-bottom: 70px;
+  position: relative;
+  color: $text-dark;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background: $accent-dark;
+    border-radius: 2px;
+    animation: expandLine 0.8s ease 0.4s forwards;
+  }
+}
+
+// Projects Section
+.projects {
+  @include section-padding;
+  background: $background-light;
+  position: relative;
+  z-index: 2;
+  
+  @media (max-width: 768px) {
+    padding: 80px 0;
+  }
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.project-card {
+  @include card-base;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+  
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px $shadow-medium;
+    border-color: $border-grey;
+  }
+  
+  @media (max-width: 768px) {
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+.project-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 15px 15px 0 0;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.3s forwards;
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+  text-align: center;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.project-category {
+  background: $primary-light;
+  color: $accent-dark;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease 0.2s forwards;
+}
+
+.project-overlay h3 {
+  color: $primary-light;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease 0.3s forwards;
+}
+
+.view-project-btn {
+  @include button-base;
+  background: $primary-light;
+  border: 2px solid $primary-dark;
+  color: $text-dark;
+  padding: 10px 25px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease 0.4s forwards;
+  
+  &:hover {
+    background: $primary-dark;
+    color: whitesmoke;
+    transform: translateY(-2px);
+  }
+}
+
+.project-info {
+  padding: 25px;
+  
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: $text-dark;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease 0.4s forwards;
+  }
+  
+  p {
+    color: $text-grey;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease 0.5s forwards;
+  }
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease 0.6s forwards;
+  
+  span {
+    color: $text-grey-light;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    
+    i {
+      margin-right: 5px;
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.load-more-container {
+  text-align: center;
+  margin-top: 30px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease 0.8s forwards;
+}
+
+.load-more-btn {
+  @include button-base;
+  background: $accent-dark;
+  color: $primary-light;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border: 2px solid $accent-dark;
+  
+  &:hover {
+    background: transparent;
+    color: $accent-dark;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(31, 41, 55, 0.2);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+// Project detail modal styles
+.project-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.project-modal-content {
+  background: $primary-light;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(50px);
+  transition: transform 0.3s ease;
+  
+  .active & {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    width: 95%;
+    max-height: 95vh;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: $accent-dark;
+  color: $primary-light;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  @include flex-center;
+  cursor: pointer;
+  z-index: 10;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 300;
+  
+  &:hover {
+    background: $accent-darker;
+    transform: scale(1.1);
+  }
+}
+
+.modal-project-content {
+  padding: 40px;
+  
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+  }
+}
+
+.modal-project-image {
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 250px;
+  }
+}
+
+.modal-project-details {
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: $text-dark;
+    
+    @media (max-width: 768px) {
+      font-size: 1.7rem;
+    }
+  }
+  
+  .project-category {
+    background: $accent-dark;
+    color: $primary-light;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    color: $text-grey;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+  }
+  
+  .project-meta {
+    display: flex;
+    gap: 30px;
+    
+    span {
+      color: $text-grey-light;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      
+      i {
+        margin-right: 10px;
+        color: $accent-dark;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+}
+
+// Animation Keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80px;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .project-info {
+    padding: 20px;
+  }
+  
+  .project-info h3 {
+    font-size: 1.3rem;
+  }
+  
+  .project-image {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-info h3 {
+    font-size: 1.2rem;
+  }
+  
+  .project-image {
+    height: 200px;
+  }
+  
+  .project-overlay h3 {
+    font-size: 1.3rem;
+  }
+}

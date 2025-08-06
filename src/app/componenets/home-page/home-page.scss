@@ -390,31 +390,54 @@ header {
   }
 }
 
-// Services Section
-.services {
+
+.service-grid {
+  
   @include section-padding;
   background: $primary-light;
   
   @media (max-width: 768px) {
     padding: 80px 0;
   }
-}
-
-.services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
+  justify-items: center;
 }
 
-.service-card {
-  @include card-base;
-  padding: 30px;
+// .service-card {
+//   @include card-base;
+//   padding: 30px;
   
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px $shadow-medium;
-    border-color: $border-grey;
-  }
+//   &:hover {
+//     transform: translateY(-10px);
+//     box-shadow: 0 20px 40px $shadow-medium;
+//     border-color: $border-grey;
+//   }
+// }
+
+// .service-card h3 {
+//   font-size: 1.8rem;
+//   margin-bottom: 15px;
+//   color: $text-dark;
+// }
+
+// .service-card p {
+//   color: $text-grey-light;
+//   line-height: 1.6;
+// }
+
+/* From Uiverse.io by joe-watson-sbf */ 
+.service-card {
+  margin-bottom: 15px;
+  color: $text-dark;
+  
+  background-color: transparent;
+  width: 190px;
+  height: 254px;
+  perspective: 1000px;
+  font-family: sans-serif;
+    margin: 0 auto;
 }
 
 .service-icon {
@@ -423,16 +446,54 @@ header {
   color: $accent-dark;
 }
 
-.service-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: $text-dark;
+.title {
+  font-size: 1.5em;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
 }
 
-.service-card p {
-  color: $text-grey-light;
-  line-height: 1.6;
+.service-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
+
+.service-card:hover .service-card-inner {
+  transform: rotateY(180deg);
+}
+
+.service-card-front, .service-card-back {
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid white;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.service-card-front {
+  background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  color: black;
+}
+
+.service-card-back {
+   background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  color: black;
+  transform: rotateY(180deg);
+}
+
 
 // About Section
 .about {
@@ -735,34 +796,7 @@ footer {
   }
 }
 
-// Responsive Breakpoints
-@media (max-width: 1024px) {
-  .hero h1 {
-    font-size: 3.5rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .hero-content {
-    max-width: 600px;
-  }
-  
-  .hero h1 {
-    font-size: 3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 2.2rem;
-  }
-  
-  .contact-form {
-    padding: 25px;
-  }
-}
-
-button {
+.get-in-touch {
   position: relative;
   padding: 12px 35px;
   background: #000000;
@@ -910,4 +944,131 @@ button:hover .star-6 {
 
 .fil0 {
   fill: #000000;
+}
+
+// Add this to your existing SCSS file
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.loading-overlay.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.custom-logo-loader {
+  width: 400px; /* Adjust as needed */
+  height: 4000px;
+  animation: pulseScale 2s infinite ease-in-out;
+}
+
+.logo-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  }
+
+
+
+@keyframes pulseScale {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+
+// @keyframes pulse {
+//   0%, 100% { opacity: 1; }
+//   50% { opacity: 0.5; }
+// }
+
+
+// Responsive Breakpoints
+@media (max-width: 1024px) {
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+  .get-in-touch {
+    font-size: 17px;
+  }
+  .custom-logo-loader {
+  width: 400px; /* Adjust as needed */
+  height: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+  }
+  .get-in-touch{
+    padding: 10px 30px;
+     font-size: 15px;
+  }
+    .custom-logo-loader {
+  width: 300px; /* Adjust as needed */
+  height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .contact-form {
+    padding: 25px;
+  }
+  .get-in-touch{
+    padding: 8px 12px;
+     font-size: 12px;
+  }
+    .custom-logo-loader {
+  width: 250px; /* Adjust as needed */
+  height: 250px;
+  }
+}
+
+
+a {
+  color: #000000;
+  text-decoration: none;
 }
