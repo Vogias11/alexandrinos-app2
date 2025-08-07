@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-our-work-page',
@@ -8,6 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './our-work-page.scss'
 })
 export class OurWorkPage {
+  constructor(private router: Router) {}
 // Add this to your existing properties
 projects = [
   {
@@ -62,7 +64,8 @@ projects = [
 
 // Add this method for viewing projects
 viewProject(project: any) {
-  console.log('Viewing project:', project);
-  // Implement project detail view logic here
+  if (project.id === 1) {
+    this.router.navigate(['/first-case']);
+  }
 }
 }

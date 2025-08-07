@@ -12,5 +12,10 @@ export const routes: Routes = [
         path: 'our-work',
         loadComponent: () =>
           import('./componenets/our-work-page/our-work-page').then((m) => m.OurWorkPage),
+      },
+       {
+        path: 'first-case',
+        loadComponent: () =>
+          import('./componenets/first-case/first-case').then((m) => m.FirstCase),
       }
         ]

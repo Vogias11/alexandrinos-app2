@@ -1,0 +1,939 @@
+// Variables
+$primary-light: #ffffff;
+$secondary-light: #f8f9fa;
+$text-dark: #0a0a0a;
+$text-grey: #4a4a4a;
+$text-grey-light: #6c757d;
+$text-grey-muted: #9ca3af;
+$border-light: #e5e7eb;
+$border-grey: #d1d5db;
+$accent-dark: #1f2937;
+$accent-darker: #111827;
+$shadow-light: rgba(0, 0, 0, 0.05);
+$shadow-medium: rgba(0, 0, 0, 0.1);
+$shadow-dark: rgba(0, 0, 0, 0.15);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-base {
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+@mixin section-padding {
+  padding: 100px 0;
+  
+  @media (max-width: 768px) {
+    padding: 80px 0;
+  }
+}
+
+// Reset and Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: $primary-light;
+  color: $text-dark;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: $accent-dark;
+  margin-bottom: 50px;
+  font-weight: 700;
+  
+  &.center {
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+// Hero Section (updated for better parallax effect)
+.project-hero {
+  position: relative;
+  min-height: 600px;
+  
+  .hero-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.1s ease-out;
+  }
+  
+  .hero-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(31, 41, 55, 0.7), rgba(31, 41, 55, 0.3));
+    z-index: 1;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  
+  .hero-text-wrapper {
+    text-align: right;
+    color: $primary-light;
+    max-width: 600px;
+    padding: 40px;
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 15px 0 0 15px;
+    margin-bottom: 40px;
+  }
+  
+  .project-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+  
+  .project-location {
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.9;
+  }
+
+
+  
+  @media (max-width: 1024px) {
+    .project-title {
+      font-size: 2.8rem;
+    }
+    
+    .hero-text-wrapper {
+      max-width: 500px;
+      padding: 30px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    height: 70vh;
+    min-height: 400px;
+    
+    .project-title {
+      font-size: 2.2rem;
+    }
+    
+    .project-location {
+      font-size: 1.1rem;
+    }
+    
+    .hero-text-wrapper {
+      max-width: 100%;
+      margin: 0 20px 20px;
+      text-align: center;
+      border-radius: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .project-title {
+      font-size: 1.8rem;
+    }
+    
+    .hero-text-wrapper {
+      padding: 20px;
+      margin: 0 15px 15px;
+    }
+  }
+}
+
+// Project Overview with Sticky Effect - Fixed for all devices
+.project-overview {
+  position: relative;
+  //min-height: 100vh;
+  background: $primary-light;
+  
+  .overview-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    overflow: visible; // Changed from hidden
+    z-index: 10; // Ensure content is visible
+  }
+  
+  .overview-content-wrapper {
+    width: 100%;
+    padding: 50px 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid $border-light;
+    border-bottom: 1px solid $border-light;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 10; // Ensure content is above hero
+  }
+  
+  .overview-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 50px;
+    align-items: center;
+    
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    @media (max-width: 768px) {
+      gap: 30px;
+    }
+  }
+  
+  .overview-text {
+    .section-title {
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 11; // Ensure title is visible
+      
+      @media (max-width: 768px) {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+    }
+    
+    .project-description {
+      font-size: 1.1rem;
+      color: $text-grey;
+      margin-bottom: 25px;
+      line-height: 1.7;
+      position: relative;
+      z-index: 11; // Ensure text is visible
+      
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .project-features {
+    .features-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+      
+      @media (max-width: 768px) {
+        gap: 20px;
+      }
+    }
+    
+    .feature-item {
+      border-bottom: 1px solid $border-light;
+      padding-bottom: 20px;
+      
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      
+      h3 {
+        font-size: 1rem;
+        color: $text-grey-light;
+        margin-bottom: 8px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .feature-value {
+        font-size: 1.4rem;
+        color: $accent-dark;
+        font-weight: 600;
+        
+        @media (max-width: 768px) {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    min-height: auto;
+    
+    .overview-sticky-wrapper {
+      position: relative;
+      height: auto;
+      min-height: 80vh;
+    }
+    
+    .overview-content-wrapper {
+      padding: 40px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .overview-content-wrapper {
+      padding: 30px 15px;
+    }
+    
+    .overview-content {
+      gap: 25px;
+    }
+  }
+}
+
+// Ensure proper stacking context
+body {
+  background-color: $primary-light;
+  color: $text-dark;
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative; // Added for proper stacking
+}
+
+// Hero Section adjustments
+.project-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  
+  .hero-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1; // Keep hero background behind content
+  }
+  
+  // Rest of hero styles remain the same...
+}
+// Parallax effect for hero image
+.hero-parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+// Floor Plans
+.floor-plans {
+  @include section-padding;
+  background: $secondary-light;
+  
+  .plans-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+  
+  .plan-item {
+    text-align: center;
+  }
+  
+  .plan-header {
+    margin-bottom: 20px;
+    
+    h3 {
+      font-size: 1.5rem;
+      color: $accent-dark;
+      font-weight: 600;
+    }
+  }
+  
+  .plan-image-container {
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px $shadow-medium;
+  }
+  svg{
+  max-width: 560px;
+  height: 300px;
+  fill: currentColor; 
+}
+  
+  .plan-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+  
+  .plan-description {
+    p {
+      color: $text-grey;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .plan-image {
+      height: 250px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .plan-image {
+      height: 200px;
+    }
+  }
+}
+
+// Project Gallery
+.project-gallery {
+  @include section-padding;
+  background-color: #f8f9fa;
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px $shadow-light;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px $shadow-medium;
+    }
+  }
+  
+  .gallery-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .gallery-image {
+      height: 220px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-image {
+      height: 200px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .gallery-image {
+      height: 250px;
+    }
+  }
+}
+
+// Project Details Section
+.project-details-section {
+  @include section-padding;
+  background: $secondary-light;
+  
+  .details-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .challenge-section,
+  .solution-section,
+  .materials-section {
+    margin-bottom: 40px;
+    
+    h3 {
+      font-size: 1.5rem;
+      color: $accent-dark;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    p {
+      color: $text-grey;
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .materials-section {
+    margin-bottom: 0;
+  }
+  
+  .materials-list {
+    list-style: none;
+    
+    li {
+      padding: 12px 0;
+      border-bottom: 1px solid $border-light;
+      color: $text-grey;
+      font-size: 1.1rem;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .challenge-section h3,
+    .solution-section h3,
+    .materials-section h3 {
+      font-size: 1.3rem;
+    }
+    
+    .materials-list li {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Call to Action
+.project-cta {
+  @include section-padding;
+  text-align: center;
+  background: linear-gradient(135deg, $accent-dark 0%, $accent-darker 100%);
+  color: $primary-light;
+  
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .cta-button {
+    @include button-base;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    
+    &.primary {
+      background: $primary-light;
+      color: $accent-dark;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    &.secondary {
+      background: transparent;
+      color: $primary-light;
+      border: 2px solid $primary-light;
+      
+      &:hover {
+        background: $primary-light;
+        color: $accent-dark;
+        transform: translateY(-3px);
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .cta-button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    .cta-content {
+      padding: 0 15px;
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+svg{
+  max-width: 300px;
+  height: 300px;
+  fill: currentColor; 
+} 
+}
+// Add these styles to your existing SCSS file
+
+// Image Modal Styles
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  
+  @media (max-width: 768px) {
+    width: 95%;
+    max-height: 85vh;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: transparent;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  border: 2px solid white;
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: white;
+    color: $accent-dark;
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    top: -40px;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+  }
+}
+
+.modal-navigation {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
+}
+
+.nav-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  @include flex-center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+  }
+  
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+.modal-image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-image {
+  width: 100%;
+  height: 70vh;
+  object-fit: contain;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    height: 60vh;
+  }
+  
+  @media (max-width: 480px) {
+    height: 50vh;
+  }
+}
+
+.modal-image-info {
+  text-align: center;
+  color: white;
+  padding: 0 20px 20px;
+  
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
+  }
+  
+  p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.image-counter {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+// Update existing gallery styles to include cursor pointer
+.gallery-item {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px $shadow-light;
+  transition: all 0.3s ease;
+  cursor: pointer; // Add this line
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px $shadow-medium;
+  }
+}
+
+.gallery-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: pointer; // Add this line
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive adjustments for modal
+@media (max-width: 1024px) {
+  .modal-image {
+    height: 65vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    max-height: 85vh;
+  }
+  
+  .modal-image {
+    height: 55vh;
+  }
+  
+  .modal-image-info h3 {
+    font-size: 1.2rem;
+  }
+  
+  .modal-image-info p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-modal {
+    padding: 10px;
+  }
+  
+  .close-modal {
+    top: -35px;
+    right: 0;
+  }
+  
+  .modal-navigation {
+    padding: 0 5px;
+  }
+  
+  .nav-button {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  
+  .modal-image {
+    height: 45vh;
+  }
+  
+  .modal-image-info {
+    padding: 0 10px 15px;
+  }
+  
+  .modal-image-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .modal-image-info p {
+    font-size: 0.8rem;
+  }
+  
+  .image-counter {
+    font-size: 0.8rem;
+  }
+}

@@ -9,7 +9,7 @@
           <div class="project-overlay">
             <div class="project-category">{{ project.category }}</div>
             <h3>{{ project.title }}</h3>
-            <button class="view-project-btn">View Project</button>
+            <button class="view-project-btn" (click)="viewProject(project)">View Project</button>
           </div>
         </div>
         <div class="project-info">
@@ -25,3 +25,4 @@
     </div> -->
   </div>
 </section>
+
