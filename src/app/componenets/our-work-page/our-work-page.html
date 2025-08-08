@@ -3,13 +3,12 @@
   <div class="container">
     <h2 class="section-title animate-on-scroll">Explore Our Work</h2>
     <div class="projects-grid">
-      <div class="project-card animate-on-scroll" *ngFor="let project of projects; let i = index">
+      <div class="project-card animate-on-scroll" (click)="viewProject(project)" *ngFor="let project of projects; let i = index">
         <div class="project-image">
           <img [src]="project.image" [alt]="project.title">
           <div class="project-overlay">
             <div class="project-category">{{ project.category }}</div>
             <h3>{{ project.title }}</h3>
-            <button class="view-project-btn" (click)="viewProject(project)">View Project</button>
           </div>
         </div>
         <div class="project-info">

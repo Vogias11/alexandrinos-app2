@@ -82,7 +82,7 @@ body {
 .section-title {
   text-align: center;
   @include responsive-font(3rem, 2.5rem, 2.2rem);
-  margin-bottom: 70px;
+  margin: 70px 0;
   position: relative;
   color: $text-dark;
   opacity: 0;
@@ -223,23 +223,6 @@ body {
   animation: fadeInUp 0.4s ease 0.3s forwards;
 }
 
-.view-project-btn {
-  @include button-base;
-  background: $primary-light;
-  border: 2px solid $primary-dark;
-  color: $text-dark;
-  padding: 10px 25px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.4s ease 0.4s forwards;
-  
-  &:hover {
-    background: $primary-dark;
-    color: whitesmoke;
-    transform: translateY(-2px);
-  }
-}
 
 .project-info {
   padding: 25px;
@@ -298,26 +281,6 @@ body {
   animation: fadeInUp 0.8s ease 0.8s forwards;
 }
 
-.load-more-btn {
-  @include button-base;
-  background: $accent-dark;
-  color: $primary-light;
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  border: 2px solid $accent-dark;
-  
-  &:hover {
-    background: transparent;
-    color: $accent-dark;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(31, 41, 55, 0.2);
-  }
-  
-  @media (max-width: 480px) {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
-}
 
 // Project detail modal styles
 .project-modal {
