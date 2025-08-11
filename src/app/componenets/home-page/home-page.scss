@@ -75,207 +75,264 @@ body {
 }
 
 
-.hero {
+// --- Modern Hero Styles ---
+.hero-modern {
+  position: relative;
   height: 100vh;
-  align-items: center;
+  min-height: 600px; // Increased minimum height for better mobile view
   display: flex;
-  position: relative;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  min-height: 600px;
-  background: linear-gradient(135deg, $background-light 0%, $secondary-light 100%);
-  
+  color: $primary-light;
+  text-align: center;
+
   @media (max-width: 768px) {
+    min-height: 550px; // Slightly reduce min height on tablets
     height: auto;
-    min-height: 500px;
-    padding: 120px 0 50px;
-    text-align: center;
-    display: block;
+    padding: 120px 0 60px; // Adjust padding for mobile nav/header
   }
-  
+
   @media (max-width: 576px) {
-    min-height: 450px;
-    padding: 100px 0 30px;
-    display: block;
+    min-height: 500px; // Further reduce min height on small phones
+    padding: 100px 0 50px; // Reduce padding further
+    box-sizing: content-box;
   }
-  
-  @media (max-height: 600px) and (min-width: 769px) {
-    height: auto;
-    min-height: 500px;
-    display: block;
-  }
+
+  // For very short screens (e.g., iPhone SE), allow even smaller height
+  @media (max-height: 600px) and (orientation: landscape) {
+     min-height: 450px;
+   }
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-  padding: 20px;
-  
-  @media (max-width: 768px) {
-    margin: 0 auto;
-    max-width: 100%;
-    padding: 0 20px;
-  }
-}
-
-.hero h1 {
-  @include responsive-font(5rem, 3.5rem, 2.2rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 20px;
-  color: $text-dark;
-  
-  @media (max-width: 992px) {
-    font-size: 3rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-  
-  @media (min-width: 1400px) {
-    font-size: 6rem;
-  }
-  
-  @media (min-width: 1800px) {
-    font-size: 7rem;
-  }
-}
-
-.hero p {
-  @include responsive-font(1.5rem, 1.3rem, 1rem);
-  margin-bottom: 30px;
-  color: $text-grey;
-  line-height: 1.6;
-}
-
-.cta-button {
-  @include button-base;
-  background: transparent;
-  border: 2px solid $accent-dark;
-  color: $accent-dark;
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  
-  &:hover {
-    background: $accent-dark;
-    color: $primary-light;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(31, 41, 55, 0.2);
-  }
-  
-  @media (max-width: 576px) {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
-}
-
-// Hero Image Wrapper
-.hero-image-wrapper {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50%;
-  height: 80%;
-  border-radius: 20px;
-  box-shadow: -20px 20px 50px $shadow-dark;
-  overflow: hidden;
-  z-index: 1;
-  
-  // Desktop breakpoints
-  @media (max-width: 1024px) {
-    width: 45%;
-    height: 75%;
-  }
-  
-  @media (max-width: 992px) {
-    width: 40%;
-    height: 70%;
-  }
-  
-  // Mobile styles
-  @media (max-width: 768px) {
-    position: relative;
-    width: 90%;
-    height: 350px;
-    margin: 50px auto 0;
-    transform: none !important;
-    top: 0;
-    right: auto;
-    left: 5%;
-  }
-  
-  @media (max-width: 576px) {
-    width: 95%;
-    height: 300px;
-    left: 2.5%;
-  }
-  
-  @media (max-width: 480px) {
-    height: 250px;
-  }
-  
-  // Height constraints
-  @media (max-height: 700px) and (min-width: 769px) {
-    height: 90%;
-  }
-  
-  @media (max-height: 600px) and (min-width: 769px) {
-    height: 85%;
-  }
-  
-  // Large screens
-  @media (min-width: 1400px) {
-    width: 55%;
-    height: 85%;
-  }
-  
-  @media (min-width: 1800px) {
-    width: 60%;
-    height: 90%;
-  }
-}
-
-// Hero Image
-.hero-image {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 20px;
-  position: relative;
-  opacity: 0.95;
-  transform: none !important; // Override parallax transforms
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(31, 41, 55, 0.1), transparent);
-    transform: rotate(45deg);
-    animation: shine 8s infinite;
-  }
-}
-
-.hero-image-overlay {
+.hero-modern-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(248, 249, 250, 0.1));
-  border-radius: 20px;
+  z-index: 1;
+  overflow: hidden;
 }
 
-@keyframes shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+.hero-modern-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center; // Ensure image is centered
+  background-repeat: no-repeat;
+  transform: scale(1);
+  transition: transform 3s ease-out;
+  will-change: transform;
+
+  // On mobile, you might want to adjust the image focus point
+  @media (max-width: 768px) {
+    background-position: center center; // Keep centered, or adjust if needed (e.g., top center)
+  }
 }
+
+.hero-modern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // Slightly lighter overlay on mobile for better text visibility
+  background: linear-gradient(to bottom, rgba($accent-darker, 0.65) 0%, rgba($accent-darker, 0.45) 50%, rgba($accent-darker, 0.75) 100%);
+}
+
+.hero-modern-container {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem; // Reduce container padding on mobile
+    max-width: 95%; // Use more of the screen width
+  }
+
+  @media (max-width: 576px) {
+    padding: 1rem;
+  }
+}
+
+.hero-modern-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem; // Slightly reduce gap on mobile
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+
+  @media (max-width: 576px) {
+    gap: 0.8rem;
+  }
+}
+
+.hero-modern-heading {
+  font-size: 3.5rem; // Slightly smaller base font size
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 1024px) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.4rem; // Smaller for tablets
+  }
+
+  @media (max-width: 576px) {
+    font-size: 2rem; // Even smaller for phones
+  }
+
+  @media (max-width: 400px) {
+    font-size: 1.8rem; // Extra small for very narrow screens
+  }
+
+  // Keep larger sizes for big screens
+  @media (min-width: 1400px) {
+    font-size: 5rem;
+  }
+
+  @media (min-width: 1800px) {
+    font-size: 6rem;
+  }
+}
+
+.hero-modern-subheading {
+  font-size: 1.4rem; // Slightly smaller base font size
+  margin: 0;
+  line-height: 1.6;
+  max-width: 650px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 1024px) {
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.15rem; // Smaller for tablets
+    max-width: 90%; // Allow more width relative to container
+  }
+
+  @media (max-width: 576px) {
+    font-size: 1rem; // Smaller for phones
+    line-height: 1.5; // Tighten line height
+  }
+
+  @media (max-width: 400px) {
+    font-size: 0.95rem;
+  }
+}
+
+.hero-modern-cta {
+  @include button-base;
+  background-color: $primary-light;
+  color: $accent-darker;
+  border: 2px solid $primary-light;
+  padding: 14px 40px; // Slightly smaller padding
+  font-size: 1.05rem; // Slightly smaller font
+  font-weight: 600;
+  border-radius: 50px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: transparent;
+    color: $primary-light;
+    border-color: $primary-light;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    
+  }
+
+  @media (max-width: 768px) {
+    padding: 13px 38px; // Adjust padding for tablets
+    font-size: 1rem;
+  }
+
+  @media (max-width: 576px) {
+    padding: 12px 35px; // Further adjust for phones
+    font-size: 0.95rem;
+    margin-top: 0.8rem; // Reduce top margin
+  }
+
+  @media (max-width: 400px) {
+    padding: 10px 30px; // Even smaller for very narrow screens
+    font-size: 0.9rem;
+  }
+}
+
+// --- Scroll Animation for Hero Section ---
+// Class applied by JS to trigger animation
+.animate-scroll-fadeInUp {
+  animation-name: fadeInUpCustom;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+// Ensure targets start hidden/offset
+.animate-scroll-target {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: none;
+
+  // On mobile, you might want a slightly different starting offset
+  @media (max-width: 768px) {
+    transform: translateY(30px);
+  }
+}
+
+// Define the animation keyframes
+@keyframes fadeInUpCustom {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  // Adjust final transform for mobile if needed
+  @media (max-width: 768px) {
+    from {
+      transform: translateY(30px);
+    }
+  }
+
+
+// Stagger animation delays for elements inside the hero
+.hero-modern-heading.animate-scroll-fadeInUp {
+  animation-delay: 0.1s;
+}
+.hero-modern-subheading.animate-scroll-fadeInUp {
+  animation-delay: 0.3s;
+}
+.hero-modern-cta.animate-scroll-fadeInUp {
+  animation-delay: 0.5s;
+}
+
+// Optional: Add a subtle zoom-in effect to the background image on scroll
+.hero-modern.scrolled .hero-modern-image {
+   transform: scale(1.05);
+
+   // Reduce zoom effect slightly on mobile for performance/smoothness
+   @media (max-width: 768px) {
+     transform: scale(1.03);
+   }
+}
+
 
 // Section Title
 .section-title {
@@ -361,88 +418,158 @@ body {
 }
 
 
-.service-grid {
-  
+// --- Services Section ---
+.services {
+  // Keep existing styles for padding, background, and grid
   @include section-padding;
   background: $primary-light;
-  
+
   @media (max-width: 768px) {
-    padding: 80px 0;
+    padding: 80px 0; // Standard padding for tablets
   }
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  justify-items: center;
+
+  @media (max-width: 576px) {
+    padding: 70px 0; // Reduced padding for phones
+  }
+
+  // --- Overlap Effect Styles ---
+  position: relative;
+  z-index: 2; // Higher z-index to appear on top of hero
+
+  // Pull the services section up to overlap the hero
+  // Adjust the -150px value to control how much it overlaps
+  // Use CSS custom properties or direct values for responsive adjustment
+  margin-top: -150px;
+
+  // Add padding top to compensate for the negative margin if needed
+  padding-top: 100px; // Or adjust as desired
+
+  // Responsive adjustments for overlap
+  @media (max-width: 1024px) {
+    margin-top: -130px; // Less overlap on smaller desktops/tablets
+    padding-top: 90px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: -110px; // Further reduce overlap on tablets
+    padding-top: 80px;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: -90px; // Even less overlap on phones
+    padding-top: 70px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: -70px; // Minimal overlap on very small screens
+    padding-top: 60px;
+  }
+
+  // Ensure the grid layout styles are preserved
+  .service-grid {
+    display: grid;
+    // Make grid responsive: 1 column on small screens, 2 on medium, 3 on large
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Slightly smaller min width
+    gap: 25px; // Reduce gap slightly on mobile
+    justify-items: center;
+
+    @media (max-width: 768px) {
+      gap: 20px;
+    }
+
+    @media (max-width: 576px) {
+      // On very small screens, single column might be better
+      // grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  }
 }
 
+// --- Service Card Styles ---
 .service-card {
   @include card-base;
-  padding: 30px;
-  
+  padding: 25px; // Slightly reduce padding
+
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px $shadow-medium;
+    transform: translateY(-8px); // Slightly less lift on hover
+    box-shadow: 0 15px 30px $shadow-medium; // Adjusted shadow
     border-color: $border-grey;
   }
+
+  @media (max-width: 768px) {
+    padding: 22px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 20px;
+    // Consider reducing max-width or width if cards feel too wide
+    // max-width: 95%;
+  }
 }
-
-// .service-card h3 {
-//   font-size: 1.8rem;
-//   margin-bottom: 15px;
-//   color: $text-dark;
-// }
-
-// /* From Uiverse.io by joe-watson-sbf */ 
-// .service-card {
-//   margin-bottom: 15px;
-//   color: $text-dark;
-  
-//   background-color: transparent;
-//   width: 190px;
-//   height: 254px;
-//   perspective: 1000px;
-//   font-family: sans-serif;
-//     margin: 0 auto;
-// }
 
 .service-icon {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 2.8rem; // Slightly smaller icon
+  margin-bottom: 18px; // Reduce margin
   color: $accent-dark;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+}
+
+// Ensure service card headings and paragraphs are responsive
+.service-card h3 {
+  font-size: 1.6rem; // Base size for service card title
+  margin-bottom: 12px;
+  color: $text-dark;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+}
+
+.service-card p {
+  font-size: 1rem; // Base size for service card description
+  color: $text-grey;
+  line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 0.9rem;
+  }
 }
 
 
-
-// .service-card-front {
-//   background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-//   color: black;
-// }
-
-// .service-card-back {
-//    background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-//   color: black;
-//   transform: rotateY(180deg);
-// }
-
-
-// About Section
+// About Section (ensure it sits correctly after the overlapped services)
 .about {
   @include section-padding;
   background: $background-light;
-  
+  position: relative; // Add this if not present
+  z-index: 3; // Add this to ensure it's above services if needed
+
   @media (max-width: 768px) {
     padding: 80px 0;
   }
-}
-// About Section
-.about {
-  @include section-padding;
-  background: $background-light;
-  
-  @media (max-width: 768px) {
-    padding: 80px 0;
+
+  @media (max-width: 576px) {
+    padding: 70px 0;
   }
 }
+  
 
 .about-container {
   display: grid;
@@ -803,45 +930,6 @@ footer {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
-}
-
-
-// @keyframes pulse {
-//   0%, 100% { opacity: 1; }
-//   50% { opacity: 0.5; }
-// }
-
-
-// Responsive Breakpoints
-@media (max-width: 1024px) {
-  .hero h1 {
-    font-size: 3.5rem;
-  }
-  .get-in-touch {
-    font-size: 17px;
-  }
-  .custom-logo-loader {
-  width: 400px; /* Adjust as needed */
-  height: 400px;
-  }
-}
-
-@media (max-width: 992px) {
-  .hero-content {
-    max-width: 600px;
-  }
-  
-  .hero h1 {
-    font-size: 3rem;
-  }
-  .get-in-touch{
-    padding: 10px 30px;
-     font-size: 15px;
-  }
-    .custom-logo-loader {
-  width: 300px; /* Adjust as needed */
-  height: 300px;
-  }
 }
 
 @media (max-width: 480px) {

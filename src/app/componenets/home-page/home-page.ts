@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,70 +10,25 @@ import { Router } from '@angular/router';
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
   
   private heroImage!: HTMLElement;
   private isMobile = false;
-  // constructor(private router: Router) {}
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.initElements();
-    }, 100);
-  }
-
-  private checkMobile() {
-    this.isMobile = window.innerWidth <= 768;
-  }
-
-  private initElements() {
-    this.heroImage = document.querySelector('.hero-image') as HTMLElement;
-  }
-
-// Remove or comment out the duplicate scroll handlers and keep only one:
-@HostListener('window:scroll')
-@HostListener('window:resize')
-onWindowEvents() {
-  this.checkMobile();
-  if (!this.isMobile) {
-    this.handleScroll();
-  }
-}
-
-private handleScroll() {
-  const scrollY = window.scrollY;
   
-  // Parallax effect for hero image (only on desktop)
-  if (this.heroImage && !this.isMobile) {
-    const parallaxSpeed = 0.3;
-    const yPos = -(scrollY * parallaxSpeed);
-    this.heroImage.style.transform = `translate3d(0, ${yPos}px, 0)`;
-  }
-  
-  // Fade effect for hero overlay
-  const heroOverlay = document.querySelector('.hero-overlay') as HTMLElement;
-  if (heroOverlay) {
-    const windowHeight = window.innerHeight;
-    const fadeStart = 0;
-    const fadeUntil = windowHeight * 0.5;
-    const opacity = Math.min(1, Math.max(0, (scrollY - fadeStart) / (fadeUntil - fadeStart)));
-    heroOverlay.style.opacity = (0.7 + opacity * 0.3).toString();
-  }
-}
+  // Hero animation properties
+  private heroSection!: HTMLElement;
+  private animationTargets!: NodeListOf<HTMLElement>;
+  private heroAnimationTriggered = false;
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkMobile();
-  }
-  
-  isScrolled = false;
   contactData = {
     name: '',
     email: '',
     phone: '',
     message: ''
   };
- constructor(private router: Router) {}
+
+  isScrolled = false;
+  
   // Make sure services data is properly defined
   services = [
     {
@@ -87,9 +42,9 @@ private handleScroll() {
       description: 'Our 3D design service lets you visualize your renovation before work begins, with detailed, realistic models tailored to your space.'
     },
     {
-      icon: 'fas fa-bath',
-      title: 'Bathroom Upgrades',
-      description: 'Luxurious bathroom renovations with premium fixtures and contemporary design.'
+      icon: 'fa-solid fa-screwdriver-wrench',
+      title: 'Supervision',
+      description: 'Expert supervision services to ensure your renovation project runs smoothly and meets the highest standards.'
     }
   ];
 
@@ -105,69 +60,66 @@ private handleScroll() {
     { icon: 'fas fa-envelope', title: 'Email', value: 'info@alexandrinos.gr' }
   ];
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
     this.animateOnScroll();
     this.checkScroll();
-     // Hide loading animation after page loads
-    window.addEventListener('load', () => {
-      this.hideLoading();
-    });
-    // Fallback in case load event doesn't fire
-    setTimeout(() => {
-      this.hideLoading();
-    }, 3000);
-    // Debug: Log to check if component is loading
-    console.log('HomePageComponent initialized');
-    console.log('Services data:', this.services);
-
-    const VISIT_THRESHOLD =  60 * 60 * 1000; // 1 hour in milliseconds
-
-    // Check if this is the first visit or if enough time has passed
+    
+    // Loading animation logic
+    const VISIT_THRESHOLD = 60 * 60 * 1000; // 1 hour in milliseconds
     const lastVisit = localStorage.getItem('lastVisitAlexandrinos');
     const now = new Date().getTime();
     
     if (!lastVisit || (now - parseInt(lastVisit)) > VISIT_THRESHOLD) {
-      // First visit or enough time has passed - show loading animation
       localStorage.setItem('lastVisitAlexandrinos', now.toString());
-      
-      // Hide loading animation after page loads
       window.addEventListener('load', () => {
         this.hideLoading();
       });
-      
-      // Fallback in case load event doesn't fire
       setTimeout(() => {
         this.hideLoading();
       }, 3000);
     } else {
-      // Recent visit - hide loading immediately
       this.hideLoadingImmediately();
     }
-
   }
 
-   hideLoading() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if (loadingOverlay) {
-      loadingOverlay.classList.add('loaded');
-      setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-      }, 500);
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.initElements();
+      this.initHeroAnimation(); // Initialize hero animation after view is ready
+    }, 100);
+  }
+
+  private checkMobile() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  private initElements() {
+    this.heroImage = document.querySelector('.hero-image') as HTMLElement;
+  }
+
+  // Initialize hero section animation elements
+  private initHeroAnimation() {
+    this.heroSection = document.getElementById('hero') as HTMLElement;
+    if (this.heroSection) {
+      this.animationTargets = this.heroSection.querySelectorAll('.animate-scroll-target');
     }
-  }
-  
-  hideLoadingImmediately() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if (loadingOverlay) {
-      loadingOverlay.style.display = 'none';
-    }
+    
+    // Trigger animation check once on load
+    this.handleHeroScroll();
   }
 
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobile();
+  }
   
   @HostListener('window:scroll', [])
   @HostListener('window:resize', [])
   onWindowScroll() {
     this.checkScroll();
+    this.handleHeroScroll(); // Check for hero animation on scroll
     
     // Parallax effect for hero image - only on desktop
     if (window.innerWidth > 768) {
@@ -187,6 +139,42 @@ private handleScroll() {
 
   private checkScroll() {
     this.isScrolled = window.scrollY > 10;
+  }
+
+  // Check if hero section is in viewport and trigger animations
+  private handleHeroScroll() {
+    // If animation already triggered, skip
+    if (this.heroAnimationTriggered || !this.heroSection || !this.animationTargets) {
+      return;
+    }
+
+    // Check if hero section is in viewport
+    if (this.isElementInViewport(this.heroSection)) {
+      // Add scrolled class for background zoom effect
+      this.heroSection.classList.add('scrolled');
+      
+      // Animate each target element
+      this.animationTargets.forEach((target, index) => {
+        if (this.isElementInViewport(target)) {
+          // Add staggered delays (100ms, 300ms, 500ms)
+          const delay = 100 + (index * 200);
+          setTimeout(() => {
+            target.classList.add('animate-scroll-fadeInUp');
+          }, delay);
+        }
+      });
+      
+      // Mark animation as triggered
+      this.heroAnimationTriggered = true;
+    }
+  }
+
+  // Check if element is in viewport (75% threshold)
+  private isElementInViewport(element: HTMLElement): boolean {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top <= (window.innerHeight * 0.75 || document.documentElement.clientHeight * 0.75)
+    );
   }
 
   navigateToOurWork() {
@@ -216,8 +204,25 @@ private handleScroll() {
     alert('Thank you for your message! We will contact you soon.');
     this.contactData = { name: '', email: '', phone: '', message: '' };
   }
+  
   getGoogleMapsLink(address: string): string {
-  return 'https://maps.app.goo.gl/nFMSr4h95yfv5HPK8' + encodeURIComponent(address);
-}
+    return 'https://maps.app.goo.gl/nFMSr4h95yfv5HPK8  ' + encodeURIComponent(address);
+  }
 
+  hideLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+      loadingOverlay.classList.add('loaded');
+      setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+      }, 500);
+    }
+  }
+  
+  hideLoadingImmediately() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+      loadingOverlay.style.display = 'none';
+    }
+  }
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +38,7 @@ export class HeaderComponent {
     }
   }
 
-  navigateToHome() {
+  navigateToHome(){
     const scrollToHero = () => {
       const heroSection = document.getElementById('hero');
       if (heroSection) {
